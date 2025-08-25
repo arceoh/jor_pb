@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import clsx from 'clsx';
 import {
@@ -18,12 +19,20 @@ const COLORS = [
 ];
 
 function CircularColorsDemo() {
-  // TODO: This value should increase by 1 every second:
-  const timeElapsed = 0;
+const [timeElapsed, setTimeElapsed] = React.useState(0);
+const [isPlaying, setIsPlaying] = React.useState(false);
 
-  // TODO: This value should cycle through the colors in the
-  // COLORS array:
-  const selectedColor = COLORS[0];
+React.useEffect(() => {
+  if (isPlaying) {
+    const interval = setInterval(() => {
+      setTimeElapsed((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }
+}, [isPlaying]);
+
+
+  const selectedColor = COLORS[timeElapsed % COLORS.length];
 
   return (
     <Card as="section" className={styles.wrapper}>
@@ -69,11 +78,11 @@ function CircularColorsDemo() {
           <dd>{timeElapsed}</dd>
         </dl>
         <div className={styles.actions}>
-          <button>
-            <Play />
-            <VisuallyHidden>Play</VisuallyHidden>
+          <button onClick={() => setIsPlaying(!isPlaying)}>
+            {isPlaying ? <Pause /> : <Play />}
+            <VisuallyHidden>{isPlaying ? 'Pause' : 'Play'}</VisuallyHidden>
           </button>
-          <button>
+          <button onClick={() => setTimeElapsed(0)}>
             <RotateCcw />
             <VisuallyHidden>Reset</VisuallyHidden>
           </button>

@@ -1,33 +1,44 @@
 'use client';
 import React from 'react';
 import clsx from 'clsx';
-
+import { motion, LayoutGroup } from "motion/react";
 import { range } from '@/utils';
 import Card from '@/components/Card';
 import SliderControl from '@/components/SliderControl';
-
 import Equation from './Equation';
 import styles from './DivisionGroupsDemo.module.css';
 
-function DivisionGroupsDemo({
+const DivisionGroupsDemo = ({
   numOfItems = 12,
   initialNumOfGroups = 1,
   includeRemainderArea,
-}) {
+}) => {
   const [numOfGroups, setNumOfGroups] = React.useState(
     initialNumOfGroups
   );
+  const reactId = React.useId();
 
-  const numOfItemsPerGroup = Math.floor(
-    numOfItems / numOfGroups
-  );
+  const itemsWithId = range(numOfItems).map((index) => ({
+    id: `${reactId}-${index}`,
+    index: `${index}`
+  }));
 
-  const remainder = includeRemainderArea
-    ? numOfItems % numOfGroups
-    : null;
+  const numOfItemsPerGroup = Math.floor(numOfItems / numOfGroups);
+  const remainder = includeRemainderArea ? numOfItems % numOfGroups : null;
 
-  // When we're splitting into 1-3 groups, display side-by-side
-  // columns. When we get to 4, it should switch to a 2x2 grid.
+  const groupedItems = range(numOfGroups).map((groupIndex) => {
+    const startIndex = groupIndex * numOfItemsPerGroup;
+    return range(numOfItemsPerGroup).map((index) => {
+      return itemsWithId[startIndex + index];
+    });
+  });
+
+  const remainderItems = remainder > 0 
+    ? range(remainder).map((index) => {
+        return itemsWithId[numOfGroups * numOfItemsPerGroup + index];
+      })
+    : [];
+
   const gridStructure =
     numOfGroups < 4
       ? {
@@ -55,38 +66,59 @@ function DivisionGroupsDemo({
       </header>
 
       <div className={styles.demoWrapper}>
-        <div
-          className={clsx(styles.demoArea)}
-          style={gridStructure}
-        >
-          {range(numOfGroups).map((groupIndex) => (
-            <div key={groupIndex} className={styles.group}>
-              {range(numOfItemsPerGroup).map((index) => {
-                return (
-                  <div
-                    key={index}
+        <LayoutGroup>
+          <div
+            className={clsx(styles.demoArea)}
+            style={gridStructure}
+          >
+            {groupedItems.map((group, groupIndex) => (
+              <div
+                key={`group-${groupIndex}`}
+                className={styles.group}
+              >
+                {group.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    layoutId={item.id}
+                    layout
+                    transition={{
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 50,
+                    }}
                     className={styles.item}
-                  />
-                );
-              })}
+                  >
+                    {item.index}
+                  </motion.div>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {includeRemainderArea && (
+            <div className={styles.remainderArea}>
+              <p className={styles.remainderHeading}>
+                Remainder Area
+              </p>
+              {remainderItems.map((item) => (
+                <motion.div
+                  key={item.id}
+                  layoutId={item.id}
+                  layout
+                  transition={{
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 50,
+                  }}
+                  className={styles.item}
+                >
+                  {item.index}
+                </motion.div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </LayoutGroup>
       </div>
-
-      {includeRemainderArea && (
-        <div className={styles.remainderArea}>
-          <p className={styles.remainderHeading}>
-            Remainder Area
-          </p>
-
-          {range(remainder).map((index) => {
-            return (
-              <div key={index} className={styles.item} />
-            );
-          })}
-        </div>
-      )}
 
       <Equation
         dividend={numOfItems}
