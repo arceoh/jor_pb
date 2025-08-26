@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import VisuallyHidden from '../VisuallyHidden';
-import { darkLightCookieToggle } from '@/app/actions/darkLightCookieToggle';
+import { darkLightCookieToggle } from '@/helpers/actions/darkLightCookieToggle';
 import styles from './DarkLightToggle.module.css'
 import { Sun, Moon, Loader } from 'react-feather';
 
