@@ -4,10 +4,10 @@ import {
   Spline_Sans_Mono,
 } from 'next/font/google';
 import clsx from 'clsx';
+import { cookies } from 'next/headers'
+import { LIGHT_COLORS, DARK_COLORS } from '@/constants';
 
-import { LIGHT_TOKENS, DARK_TOKENS } from '@/constants';
 import RespectMotionPreferences from '@/components/RespectMotionPreferences';
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import './styles.css';
@@ -25,22 +25,23 @@ const monoFont = Spline_Sans_Mono({
   variable: '--font-family-mono',
 });
 
-function RootLayout({ children }) {
-  // TODO: Dynamic theme depending on user preference
-  const theme = 'light';
+async function RootLayout({ children }) {
+  const savedTheme = await cookies().get('color-theme');
+  console.log('savedTheme', savedTheme)
+  const theme = savedTheme?.value || 'light';
+  const themeColors = theme === 'light' ? LIGHT_COLORS : DARK_COLORS;
 
   return (
     <RespectMotionPreferences>
       <html
         lang="en"
         className={clsx(mainFont.variable, monoFont.variable)}
-        data-color-theme={theme}
-        style={theme === 'light' ? LIGHT_TOKENS : DARK_TOKENS}
+        data-color-theme={theme} style={themeColors}
       >
-        <body>
-          <Header theme={theme} />
-          <main>{children}</main>
-          <Footer />
+        <body>         
+            <Header theme={theme} />
+            <main>{children}</main>
+            <Footer />         
         </body>
       </html>
     </RespectMotionPreferences>

@@ -20,7 +20,6 @@ export const generateMetadata = async ({ params }) => {
 
 async function BlogPost({ params }) {
   const { postSlug } = params;
-  console.log('PARAMS', params)
 
   const { frontmatter, content } = await loadBlogPost(postSlug);
 
