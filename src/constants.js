@@ -1,4 +1,8 @@
 export const BLOG_TITLE = 'Bits & Bytes';
+export const BLOG_DESCRIPTION =
+  'A wonderful blog about JavaScript';
+
+export const COLOR_THEME_COOKIE_NAME = 'color-theme';
 
 export const LIGHT_COLORS = {
   '--color-text': 'hsl(0deg 0% 5%)',
@@ -88,7 +92,8 @@ DARK_COLORS['--color-backdrop'] =
   DARK_COLORS['--color-decorative-100'];
 DARK_COLORS['--color-backdrop-highlight'] =
   DARK_COLORS['--color-decorative-500'];
-DARK_COLORS['--color-page-background'] = 'transparent';
+DARK_COLORS['--color-page-background'] =
+  'transparent';
 DARK_COLORS['--color-page-border'] =
   'hsl(256deg 30% 50% / 0.2)';
 DARK_COLORS['--color-card-background'] =

@@ -10,20 +10,19 @@
     "new-component": "new-component"
   },
   "dependencies": {
-    "bright": "0.8.4",
-    "clsx": "1.2.1",
-    "date-fns": "2.30.0",
-    "eslint": "8.43.0",
-    "eslint-config-next": "13.4.6",
-    "framer-motion": "10.14",
-    "gray-matter": "4.0.3",
-    "js-cookie": "3.0.5",
+    "bright": "^1.0.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "eslint": "^9.34.0",
+    "eslint-config-next": "^15.5.2",
+    "gray-matter": "^4.0.3",
     "motion": "^12.23.12",
-    "new-component": "5.0.2",
+    "new-component": "^6.0.0",
     "next": "^15.5.2",
-    "next-mdx-remote": "4.4.1",
+    "next-mdx-remote": "^5.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-feather": "2.0.10"
+    "react-feather": "^2.0.10",
+    "rss": "^1.2.2"
   }
 }

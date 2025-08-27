@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Rss, Sun, Moon } from 'react-feather';
+import Link from 'next/link';
 
 import Logo from '@/components/Logo';
 import VisuallyHidden from '@/components/VisuallyHidden';
@@ -17,18 +18,17 @@ function Header({ initialTheme, className, ...delegated }) {
       <Logo />
 
       <div className={styles.actions}>
-        <button className={styles.action}>
+        <Link href="/rss.xml" className={styles.action}>
           <Rss
             size="1.5rem"
-            style={{
-              // Optical alignment
+            style={{            
               transform: 'translate(2px, -2px)',
             }}
           />
           <VisuallyHidden>
             View RSS feed
           </VisuallyHidden>
-        </button>
+        </Link>
         <DarkLightToggle initialTheme={initialTheme} />
         <VisuallyHidden>
           Toggle dark / light mode

@@ -20,7 +20,7 @@ function BlogSummaryCard({
 
   return (
     <Card className={styles.wrapper}>
-      <Link href={href} className={styles.title}>
+      <Link href={href} className={styles.title}   prefetch={true}>
         {title}
       </Link>
       <time dateTime={publishedOn}>{humanizedDate}</time>
@@ -28,6 +28,7 @@ function BlogSummaryCard({
         {abstract}{' '}
         <Link
           href={href}
+            prefetch={true}
           className={styles.continueReadingLink}
         >
           Continue reading{' '}
