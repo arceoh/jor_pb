@@ -26,8 +26,8 @@ const monoFont = Spline_Sans_Mono({
 });
 
 async function RootLayout({ children }) {
-  const savedTheme = await cookies().get('color-theme');
-  console.log('savedTheme', savedTheme)
+  const cookieStore = await cookies()
+  const savedTheme = cookieStore.get('color-theme');
   const theme = savedTheme?.value || 'light';
   const themeColors = theme === 'light' ? LIGHT_COLORS : DARK_COLORS;
 
@@ -39,7 +39,7 @@ async function RootLayout({ children }) {
         data-color-theme={theme} style={themeColors}
       >
         <body>         
-            <Header theme={theme} />
+            <Header initialTheme={theme} />
             <main>{children}</main>
             <Footer />         
         </body>

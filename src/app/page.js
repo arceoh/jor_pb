@@ -18,9 +18,10 @@ async function Home() {
         Latest Content:
       </h1>
 
-      {blogData.map((post) => {
+      {blogData.map((post) => {       
         return (
           <BlogSummaryCard
+            key={post.slug}
             slug={post.slug}
             title={post.title}
             abstract={post.abstract}
